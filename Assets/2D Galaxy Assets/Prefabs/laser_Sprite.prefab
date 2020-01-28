@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4318309924665434}
   - component: {fileID: 212288478425671468}
+  - component: {fileID: 114596529677303488}
   m_Layer: 0
   m_Name: laser_Sprite
   m_TagString: Untagged
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114596529677303488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1073361681942628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97d838693fe0ba649843e5c3a7a30c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
 --- !u!212 &212288478425671468
 SpriteRenderer:
   m_ObjectHideFlags: 1

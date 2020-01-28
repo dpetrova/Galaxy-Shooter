@@ -363,9 +363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbcc4abc06e5444dacb54d0b1db2967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserPrefab: {fileID: 1073361681942628, guid: 84d13caa5adb88f45ae62a021db1ddf7,
+  _laserPrefab: {fileID: 1073361681942628, guid: 84d13caa5adb88f45ae62a021db1ddf7,
     type: 2}
-  speed: 5
+  _speed: 5
+  _fireRate: 0.25
 --- !u!1 &2058459126
 GameObject:
   m_ObjectHideFlags: 0

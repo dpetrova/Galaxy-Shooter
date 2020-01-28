@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    public GameObject laserPrefab;
+    [SerializeField]
+    private GameObject _laserPrefab;
 
     [SerializeField] //keep variable private but visible in the Inspector
-    private float speed = 5.0f;    
+    private float _speed = 5.0f;
+
+    //variables needed for cool down system
+    [SerializeField]
+    private float _fireRate = 0.25f;
+    private float _nextFire = 0.0f;
 
 	// Use this for initialization
 	void Start () {
         //current position = new position
-        transform.position = new Vector3(0, 0, 0);
-		
+        transform.position = new Vector3(0, 0, 0);		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {        
         Movement();
 
-        //if space key is pressed spawn laser at player position
-        if (Input.GetKeyDown(KeyCode.Space))
+        //if space key/or left mouse is pressed spawn laser at player position
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            Instantiate(laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+            Shoot();            
         }
     }
 
@@ -35,8 +40,8 @@ public class Player : MonoBehaviour {
         //--------------------------------------------------------
         float horizontalInput = Input.GetAxis("Horizontal");
         float vertivalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
-        transform.Translate(Vector3.up * speed * vertivalInput * Time.deltaTime);
+        transform.Translate(Vector3.right * _speed * horizontalInput * Time.deltaTime);
+        transform.Translate(Vector3.up * _speed * vertivalInput * Time.deltaTime);
 
         //--------------------------------------------------------
         // SET PLAYER BOUNDARIES
@@ -60,6 +65,16 @@ public class Player : MonoBehaviour {
         else if (transform.position.x < -9.5f)
         {
             transform.position = new Vector3(9.5f, transform.position.y, 0);
+        }
+    }
+
+    private void Shoot()
+    {
+        //cool down system
+        if (Time.time > _nextFire)
+        {
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+            _nextFire = Time.time + _fireRate;
         }
     }
 }
