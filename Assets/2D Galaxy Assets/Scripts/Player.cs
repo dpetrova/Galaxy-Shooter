@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    public bool canTripleShot = false;
+
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
 
     [SerializeField] //keep variable private but visible in the Inspector
-    private float _speed = 5.0f;
+    private float _speed = 7.0f;
 
     //variables needed for cool down system
     [SerializeField]
@@ -73,8 +77,30 @@ public class Player : MonoBehaviour {
         //cool down system
         if (Time.time > _nextFire)
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+            if (canTripleShot)
+            {
+                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+            }            
+            
             _nextFire = Time.time + _fireRate;
         }
+    }
+
+    private IEnumerator TripleShotPowerDownRoutine()
+    {
+        //disable tripleshot mode after 5 sec
+        yield return new WaitForSeconds(5.0f);
+        canTripleShot = false;
+    }
+
+    public void TripleShotPowerupOn()
+    {
+        this.canTripleShot = true;
+        //start coroutine which disable tripleshot mode after 5 sec
+        StartCoroutine(this.TripleShotPowerDownRoutine());
     }
 }
