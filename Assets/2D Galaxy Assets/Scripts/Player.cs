@@ -5,11 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public bool canTripleShot = false;
+    public bool isSpeedBoostActive = false;
 
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    //[SerializeField]
+    //private GameObject _speedBoosttPrefab;
 
     [SerializeField] //keep variable private but visible in the Inspector
     private float _speed = 7.0f;
@@ -44,9 +47,18 @@ public class Player : MonoBehaviour {
         //--------------------------------------------------------
         float horizontalInput = Input.GetAxis("Horizontal");
         float vertivalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.right * _speed * horizontalInput * Time.deltaTime);
-        transform.Translate(Vector3.up * _speed * vertivalInput * Time.deltaTime);
 
+        if(isSpeedBoostActive)
+        {
+            transform.Translate(Vector3.right * _speed * 1.5f * horizontalInput * Time.deltaTime);
+            transform.Translate(Vector3.up * _speed *1.5f * vertivalInput * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.right * _speed * horizontalInput * Time.deltaTime);
+            transform.Translate(Vector3.up * _speed * vertivalInput * Time.deltaTime);
+        }
+        
         //--------------------------------------------------------
         // SET PLAYER BOUNDARIES
         //--------------------------------------------------------
@@ -97,10 +109,23 @@ public class Player : MonoBehaviour {
         canTripleShot = false;
     }
 
+    private IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        //disable speed boost after 5 sec
+        yield return new WaitForSeconds(5.0f);
+        isSpeedBoostActive = false;
+    }
+
     public void TripleShotPowerupOn()
     {
         this.canTripleShot = true;
         //start coroutine which disable tripleshot mode after 5 sec
         StartCoroutine(this.TripleShotPowerDownRoutine());
+    }    
+
+    public void SpeeedBoostPowerupOn()
+    {
+        this.isSpeedBoostActive = true;
+        StartCoroutine(this.SpeedBoostPowerDownRoutine());
     }
 }
