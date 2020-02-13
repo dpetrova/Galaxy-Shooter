@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2D Galaxy Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\Laser.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\Player.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\PowerUp.cs" />

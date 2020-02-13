@@ -19,6 +19,12 @@ public class Laser : MonoBehaviour {
         //destroy the laser when dissapear from the screen
         if(transform.position.y > 6)
         {
+            //if is a triple laser that is a parent with 3 laser childs
+            if(transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+
             Destroy(this.gameObject);
         }
 	}

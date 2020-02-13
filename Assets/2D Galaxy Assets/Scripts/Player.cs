@@ -5,14 +5,17 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public bool canTripleShot = false;
+
     public bool isSpeedBoostActive = false;
 
     [SerializeField]
-    private GameObject _laserPrefab;
+    private GameObject _explosionPrefab;
+
     [SerializeField]
-    private GameObject _tripleShotPrefab;
-    //[SerializeField]
-    //private GameObject _speedBoosttPrefab;
+    private GameObject _laserPrefab;
+
+    [SerializeField]
+    private GameObject _tripleShotPrefab;    
 
     [SerializeField] //keep variable private but visible in the Inspector
     private float _speed = 7.0f;
@@ -21,6 +24,8 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float _fireRate = 0.25f;
     private float _nextFire = 0.0f;
+
+    private int lives = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -87,18 +92,18 @@ public class Player : MonoBehaviour {
     private void Shoot()
     {
         //cool down system
-        if (Time.time > _nextFire)
+        if (Time.time > this._nextFire)
         {
-            if (canTripleShot)
+            if (this.canTripleShot)
             {
-                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                Instantiate(this._tripleShotPrefab, transform.position, Quaternion.identity);
             }
             else
             {
-                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+                Instantiate(this._laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
             }            
             
-            _nextFire = Time.time + _fireRate;
+            this._nextFire = Time.time + this._fireRate;
         }
     }
 
@@ -106,14 +111,14 @@ public class Player : MonoBehaviour {
     {
         //disable tripleshot mode after 5 sec
         yield return new WaitForSeconds(5.0f);
-        canTripleShot = false;
+        this.canTripleShot = false;
     }
 
     private IEnumerator SpeedBoostPowerDownRoutine()
     {
         //disable speed boost after 5 sec
         yield return new WaitForSeconds(5.0f);
-        isSpeedBoostActive = false;
+        this.isSpeedBoostActive = false;
     }
 
     public void TripleShotPowerupOn()
@@ -127,5 +132,18 @@ public class Player : MonoBehaviour {
     {
         this.isSpeedBoostActive = true;
         StartCoroutine(this.SpeedBoostPowerDownRoutine());
+    }
+
+    public void Damage()
+    {
+        //substract 1 life
+        this.lives--;
+
+        //if no lives destroy player
+        if(this.lives < 1)
+        {
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
     }
 }
