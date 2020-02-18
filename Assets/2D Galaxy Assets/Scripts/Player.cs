@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     public bool canTripleShot = false;
 
     public bool isSpeedBoostActive = false;
+    public bool isShieldActive = false;
 
     [SerializeField]
     private GameObject _explosionPrefab;
@@ -27,12 +28,20 @@ public class Player : MonoBehaviour {
 
     private int lives = 3;
 
+    private GameObject _shield;
+
+
 	// Use this for initialization
 	void Start () {
         //current position = new position
-        transform.position = new Vector3(0, 0, 0);		
-	}
+        transform.position = new Vector3(0, 0, 0);
+
+        //find child shield
+        this._shield = transform.Find("Shield_sprite").gameObject;        
+        if (this._shield != null) this._shield.SetActive(false);        
+    }
 	
+
 	// Update is called once per frame
 	void Update () {        
         Movement();
@@ -89,6 +98,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+
     private void Shoot()
     {
         //cool down system
@@ -107,12 +117,14 @@ public class Player : MonoBehaviour {
         }
     }
 
+
     private IEnumerator TripleShotPowerDownRoutine()
     {
         //disable tripleshot mode after 5 sec
         yield return new WaitForSeconds(5.0f);
         this.canTripleShot = false;
     }
+
 
     private IEnumerator SpeedBoostPowerDownRoutine()
     {
@@ -121,6 +133,16 @@ public class Player : MonoBehaviour {
         this.isSpeedBoostActive = false;
     }
 
+
+    private IEnumerator ShieldPowerDownRoutine()
+    {
+        //disable speed boost after 60 sec
+        yield return new WaitForSeconds(60.0f);
+        this.isShieldActive = false;
+        this._shield.SetActive(false);
+    }
+
+
     public void TripleShotPowerupOn()
     {
         this.canTripleShot = true;
@@ -128,14 +150,32 @@ public class Player : MonoBehaviour {
         StartCoroutine(this.TripleShotPowerDownRoutine());
     }    
 
+
     public void SpeeedBoostPowerupOn()
     {
         this.isSpeedBoostActive = true;
         StartCoroutine(this.SpeedBoostPowerDownRoutine());
     }
 
+
+    public void ShieldPowerupOn()
+    {
+        this.isShieldActive = true;
+        this._shield.SetActive(true);
+        StartCoroutine(this.ShieldPowerDownRoutine());
+    }
+
+
     public void Damage()
     {
+        //check if shield is active
+        if(this.isShieldActive == true)
+        {
+            this.isShieldActive = false;
+            this._shield.SetActive(false);
+            return;
+        }
+
         //substract 1 life
         this.lives--;
 
