@@ -62,10 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\2D Galaxy Assets\Scripts\EnemyAI.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Scripts\ExplosionEffect.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\Laser.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\Player.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\SpawnManager.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Scripts\UIManager.cs" />
     <None Include="Assets\2D Galaxy Assets\Materials\Shaders\Galaxy.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity3D_projects/Galaxy Shooter/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

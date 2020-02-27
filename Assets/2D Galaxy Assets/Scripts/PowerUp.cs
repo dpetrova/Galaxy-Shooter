@@ -16,8 +16,15 @@ public class PowerUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //move down
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-	}
+        
+        //set boundaries       
+        if (transform.position.y < -7f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

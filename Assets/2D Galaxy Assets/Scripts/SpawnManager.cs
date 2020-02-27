@@ -9,12 +9,18 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] _powerups;
 
-	
-	void Start () {
+    private GameManager _gameManager;
 
+
+    void Start () {
+
+        this._gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();        
+    }
+
+    public void StartSpawnRoutines()
+    {
         //spawn eneme every 5 sec
         StartCoroutine(SpawnEnemyRoutine());
-
         //spawn powerup every 7 sec
         StartCoroutine(SpawnPowerupRoutine());
     }
@@ -22,7 +28,7 @@ public class SpawnManager : MonoBehaviour {
 
     private IEnumerator SpawnEnemyRoutine()
     {
-        while (true)
+        while (this._gameManager.gameOver == false)
         {
             Vector3 randomPos = new Vector3(Random.Range(-7f, 7f), 7f, 0);
             Instantiate(this._enemyPrefab, randomPos, Quaternion.identity);
@@ -32,7 +38,7 @@ public class SpawnManager : MonoBehaviour {
 
     private IEnumerator SpawnPowerupRoutine()
     {
-        while (true)
+        while (this._gameManager.gameOver == false)
         {
             int randomPowerup = Random.Range(0, 3); //will return number between 0-2 (exclusive)
             Vector3 randomPos = new Vector3(Random.Range(-7f, 7f), 7f, 0);

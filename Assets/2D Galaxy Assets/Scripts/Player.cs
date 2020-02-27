@@ -30,15 +30,29 @@ public class Player : MonoBehaviour {
 
     private GameObject _shield;
 
+    private UIManager _uiManager;
+    private GameManager _gameManager;
+    private SpawnManager _spawnManager;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         //current position = new position
         transform.position = new Vector3(0, 0, 0);
 
         //find child shield
         this._shield = transform.Find("Shield_sprite").gameObject;        
-        if (this._shield != null) this._shield.SetActive(false);        
+        if (this._shield != null) this._shield.SetActive(false);
+
+        //assign UIManager
+        this._uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (this._uiManager != null) this._uiManager.UpdateLives(this.lives);
+
+        //assign GameManager
+        this._gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        //assign SpawnManager
+        this._spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        this._spawnManager.StartSpawnRoutines();
     }
 	
 
@@ -178,11 +192,18 @@ public class Player : MonoBehaviour {
 
         //substract 1 life
         this.lives--;
+        //update lives UI
+        this._uiManager.UpdateLives(this.lives);
 
         //if no lives destroy player
-        if(this.lives < 1)
+        if (this.lives < 1)
         {
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            //show title screen
+            this._uiManager.ShowTitleScreen();
+            //game over
+            this._gameManager.gameOver = true;
+
             Destroy(this.gameObject);
         }
     }

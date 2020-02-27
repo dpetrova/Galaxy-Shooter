@@ -10,10 +10,13 @@ public class EnemyAI : MonoBehaviour {
     [SerializeField]
     private GameObject _enemyExplosionPrefab;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    private UIManager _uiManager;
+
+    // Use this for initialization
+    void Start () {
+        //assign UIManager
+        this._uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,8 +47,10 @@ public class EnemyAI : MonoBehaviour {
             Destroy(other.gameObject);
             //play explosiaon animation
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            //update player score
+            this._uiManager.UpdateScore();
             //destroy myself (enemy)
-            Destroy(this.gameObject);
+            Destroy(this.gameObject);            
         }
         //nrmy hit player
         else if(other.tag == "Player")
@@ -56,6 +61,6 @@ public class EnemyAI : MonoBehaviour {
             //play explosiaon animation
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
-        }
+        }        
     }
 }
