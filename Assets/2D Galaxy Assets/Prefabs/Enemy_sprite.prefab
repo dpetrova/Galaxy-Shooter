@@ -81,6 +81,7 @@ MonoBehaviour:
   _speed: 5
   _enemyExplosionPrefab: {fileID: 1796533258789294, guid: aeb08653019a3de478291b3475db7378,
     type: 2}
+  _clip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &212385934583985748
 SpriteRenderer:
   m_ObjectHideFlags: 1

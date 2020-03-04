@@ -33,6 +33,7 @@ public class Player : MonoBehaviour {
     private UIManager _uiManager;
     private GameManager _gameManager;
     private SpawnManager _spawnManager;
+    private AudioSource _audioSource;
 
     // Use this for initialization
     void Start () {
@@ -53,11 +54,14 @@ public class Player : MonoBehaviour {
         //assign SpawnManager
         this._spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         this._spawnManager.StartSpawnRoutines();
-    }
-	
 
-	// Update is called once per frame
-	void Update () {        
+        //assign AudioSource
+        this._audioSource = GetComponent<AudioSource>();
+    }
+
+
+    // Update is called once per frame
+    void Update () {        
         Movement();
 
         //if space key/or left mouse is pressed spawn laser at player position
@@ -125,8 +129,11 @@ public class Player : MonoBehaviour {
             else
             {
                 Instantiate(this._laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
-            }            
-            
+            }
+
+            //play laser sound
+            this._audioSource.Play();
+
             this._nextFire = Time.time + this._fireRate;
         }
     }

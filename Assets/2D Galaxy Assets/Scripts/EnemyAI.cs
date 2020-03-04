@@ -10,6 +10,9 @@ public class EnemyAI : MonoBehaviour {
     [SerializeField]
     private GameObject _enemyExplosionPrefab;
 
+    [SerializeField]
+    private AudioClip _clip;
+
     private UIManager _uiManager;
 
     // Use this for initialization
@@ -49,6 +52,10 @@ public class EnemyAI : MonoBehaviour {
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
             //update player score
             this._uiManager.UpdateScore();
+            //play explosion sound at given position at world space
+            AudioSource.PlayClipAtPoint(this._clip, Camera.main.transform.position, 1f);
+            //AudioSource.PlayClipAtPoint(this._clip, transform.position, 1f);
+
             //destroy myself (enemy)
             Destroy(this.gameObject);            
         }
@@ -60,6 +67,10 @@ public class EnemyAI : MonoBehaviour {
             player.Damage();
             //play explosiaon animation
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            //play explosion sound at given position at world space
+            AudioSource.PlayClipAtPoint(this._clip, Camera.main.transform.position, 1f);
+            //AudioSource.PlayClipAtPoint(this._clip, transform.position, 1f);
+
             Destroy(this.gameObject);
         }        
     }
