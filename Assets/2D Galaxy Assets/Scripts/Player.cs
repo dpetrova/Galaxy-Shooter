@@ -16,7 +16,10 @@ public class Player : MonoBehaviour {
     private GameObject _laserPrefab;
 
     [SerializeField]
-    private GameObject _tripleShotPrefab;    
+    private GameObject _tripleShotPrefab;
+
+    [SerializeField]
+    private GameObject[] _enginesFailure;
 
     [SerializeField] //keep variable private but visible in the Inspector
     private float _speed = 7.0f;
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour {
     private float _nextFire = 0.0f;
 
     private int lives = 3;
+    private int _hitCount = 0;
 
     private GameObject _shield;
 
@@ -57,6 +61,14 @@ public class Player : MonoBehaviour {
 
         //assign AudioSource
         this._audioSource = GetComponent<AudioSource>();
+
+        //initially deactivate engines failure
+        foreach (var item in this._enginesFailure)
+        {
+            item.SetActive(false);
+        }
+
+        this._hitCount = 0;
     }
 
 
@@ -195,6 +207,17 @@ public class Player : MonoBehaviour {
             this.isShieldActive = false;
             this._shield.SetActive(false);
             return;
+        }
+
+        //apply damage
+        this._hitCount++;
+        if (this._hitCount == 1)
+        {
+            this._enginesFailure[0].SetActive(true);
+        }
+        else if (this._hitCount == 2)
+        {
+            this._enginesFailure[1].SetActive(true);
         }
 
         //substract 1 life

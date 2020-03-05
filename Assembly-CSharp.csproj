@@ -66,6 +66,7 @@
     <Compile Include="Assets\2D Galaxy Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\Laser.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Scripts\PlayerAnimation.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\SpawnManager.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Scripts\UIManager.cs" />
